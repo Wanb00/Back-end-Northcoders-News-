@@ -8,7 +8,6 @@ const getEndpoints = (req, res, next) => {
 const getTopics = (req, res, next) => {
     return selectTopics()
         .then((topics) => {
-            //console.log( { topics })
             res.status(200).send({ topics })
         })
 }

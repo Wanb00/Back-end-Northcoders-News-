@@ -75,5 +75,12 @@ describe('GET /api/articles/:article_id', () => {
         expect(response.body.msg).toEqual('Invalid ID Bad Request');
       })
   })
-  
+  test('responds with 404 error request when ID does not exist', () => {
+    return request(app)
+      .get('/api/articles/99999')
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toEqual('Article Not Found')
+      })
+  })
 })
