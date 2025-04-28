@@ -4,7 +4,8 @@ const request = require('supertest');
 const app = require('../db/app');
 const db = require('../db/connection');
 const seed = require('../db/seeds/seed');
-const data = require('../db/data/test-data')
+const data = require('../db/data/test-data');
+const { toBeSortedBy } = require('jest-sorted');
 /* Set up your beforeEach & afterAll functions here */
 
 beforeEach(() => seed(data));
@@ -84,3 +85,47 @@ describe('GET /api/articles/:article_id', () => {
       })
   })
 })
+
+describe('GET /api/articles', () => {
+  test('responds with all articles upon request', () => {
+    return request(app)
+    .get('/api/articles')
+    .expect(200)
+    .then((response) => {
+      const articles = response.body.articles;
+      expect(articles.length).toBeGreaterThan(0);
+      articles.forEach((article) => {
+        expect(article).toEqual(
+          expect.objectContaining({
+          author: expect.any(String),
+          title: expect.any(String),
+          article_id: expect.any(Number),
+          topic: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          article_img_url: expect.any(String),
+          comment_count: expect.any(Number),
+        })
+        );
+      });
+    });
+  });
+  test('response result is ordered in descending order', () => {
+    return request(app)
+    .get('/api/articles')
+    .expect(200)
+    .then((response) => {
+      const articles = response.body.articles;
+      expect(articles).toBeSortedBy('created_at', { descending: true })
+   });
+  });
+  test('no body property is present on the response', () => {
+    return request(app)
+    .get('/api/articles')
+    .expect(200)
+    .then((response) => {
+      const articles = response.body.articles;
+      expect(articles).not.toHaveProperty('body');
+   });
+  });
+});
