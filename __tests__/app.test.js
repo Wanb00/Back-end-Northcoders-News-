@@ -44,6 +44,8 @@ describe('GET /api/topics', () => {
         topics.forEach((topic) => {
           expect(topic).hasOwnProperty('slug');
           expect(topic).hasOwnProperty('description');
+          expect(typeof topic.slug).toBe('string')
+          expect(typeof topic.description).toBe('string')
         })
       })
   })
