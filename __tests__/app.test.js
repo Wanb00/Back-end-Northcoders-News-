@@ -20,3 +20,21 @@ describe("GET /api", () => {
       });
   });
 });
+
+
+
+describe('GET /api/topics', () => {
+  test('responds with a status of 200 and an array of all topics', () => {
+    return request(app)
+      .get('/api/topics')
+      .expect(200)
+      .then((response) => {
+        const topics = response.body.topics;
+        expect(topics.length).toBeGreaterThan(0);
+        topics.forEach((topic) => {
+          expect(topic).hasOwnProperty('slug');
+          expect(topic).hasOwnProperty('description');
+        })
+      })
+  })
+})
