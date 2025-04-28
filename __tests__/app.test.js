@@ -67,4 +67,13 @@ describe('GET /api/articles/:article_id', () => {
       })
     })
   })
+  test('responds with 400 error when passed an invalid ID', () => {
+    return request(app)
+      .get('/api/articles/notAnId')
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toEqual('Invalid ID Bad Request');
+      })
+  })
+  
 })
