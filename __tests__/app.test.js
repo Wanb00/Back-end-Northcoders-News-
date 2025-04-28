@@ -20,3 +20,30 @@ describe("GET /api", () => {
       });
   });
 });
+
+describe('Bad URLs', () => {
+  test('responds with status 404 on request', () => {
+    return request(app)
+      .get('/api/notAValidUrl')
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe('Not Found!');
+      })
+  })
+})
+
+describe('GET /api/topics', () => {
+  test('responds with a status of 200 and an array of all topics', () => {
+    return request(app)
+      .get('/api/topics')
+      .expect(200)
+      .then((response) => {
+        const topics = response.body.topics;
+        expect(topics.length).toBeGreaterThan(0);
+        topics.forEach((topic) => {
+          expect(topic).hasOwnProperty('slug');
+          expect(topic).hasOwnProperty('description');
+        })
+      })
+  })
+})
