@@ -21,7 +21,16 @@ describe("GET /api", () => {
   });
 });
 
-
+describe('Bad URLs', () => {
+  test('responds with status 404 on request', () => {
+    return request(app)
+      .get('/api/notAValidUrl')
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe('Not Found!');
+      })
+  })
+})
 
 describe('GET /api/topics', () => {
   test('responds with a status of 200 and an array of all topics', () => {
