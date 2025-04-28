@@ -47,3 +47,24 @@ describe('GET /api/topics', () => {
       })
   })
 })
+
+describe('GET /api/articles/:article_id', () => {
+  test('responds with an article object with the the properties of author, title, article_id, body, topic, created_at, votes and article_img_url', () => {
+    return request(app)
+    .get('/api/articles/3')
+    .expect(200)
+    .then((response) => {
+      const article = response.body.article
+      expect(article).toMatchObject({
+        author: 'icellusedkars',
+        title: 'Eight pug gifs that remind me of mitch',
+        article_id: 3,
+        body: 'some gifs',
+        topic: 'mitch',
+        created_at: '2020-11-03T09:12:00.000Z',
+        votes: 0,
+        article_img_url: "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+      })
+    })
+  })
+})
