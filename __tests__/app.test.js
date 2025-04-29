@@ -232,3 +232,66 @@ describe('POST /api/articles/:article_id/comments', () => {
       });
   });
 });
+
+describe('PATCH /api/articles/:article_id', () => {
+  test('updates and returns the updated article', () => {
+    return request(app)
+      .patch('/api/articles/3')
+      .expect(200)
+      .send({ inc_votes: 10 })
+      .then((response) => {
+        const article = response.body.article;        
+        expect(article).toEqual(
+          expect.objectContaining({
+            article_id: 3,
+            votes: 10,
+            title: expect.any(String),
+            body: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            article_img_url: expect.any(String)
+          })
+        );
+      })
+  })
+  test('400: responds with Bad Request if inc_votes is not a number', () => {
+    return request(app)
+      .patch('/api/articles/1')
+      .send({ inc_votes: 'not-a-number' })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe('Bad Request inc_votes must be a number');
+      });
+  });
+
+  test('400: responds with Bad Request if article_id is invalid', () => {
+    return request(app)
+      .patch('/api/articles/banana')
+      .send({ inc_votes: 1 })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe('Invalid ID Bad Request');
+      });
+  });
+
+  test('404: responds with Article not found if ID is valid but does not exist', () => {
+    return request(app)
+      .patch('/api/articles/9999')
+      .send({ inc_votes: 1 })
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe('Article Not Found');
+      });
+  });
+
+  test('400: responds with Bad Request if inc_votes is missing', () => {
+    return request(app)
+      .patch('/api/articles/1')
+      .send({})
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe('Bad Request inc_votes must be a number');
+      });
+  });
+})
