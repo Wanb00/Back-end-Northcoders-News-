@@ -175,3 +175,60 @@ describe('GET /api/articles/:article_id/comments', () => {
     })
   })
 })
+
+describe('POST /api/articles/:article_id/comments', () => {
+  test('adds the comment and returns the posted comment', () => {
+    const newComment = {
+      username: 'butter_bridge',
+      body: 'This is an amazing article!'
+    };
+
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send(newComment)
+      .expect(201)
+      .then((response) => {
+        const comment = response.body.comment;
+        expect(comment).toEqual(
+          expect.objectContaining({
+            comment_id: expect.any(Number),
+            votes: 0,
+            created_at: expect.any(String),
+            author: 'butter_bridge',
+            body: 'This is an amazing article!',
+            article_id: 1
+          })
+        );
+      });
+  });
+
+  test('responds with 400 bad request if post is missing body or username', () => {
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send({ username: 'butter_bridge' })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Bad Request, Missing required fields');
+      });
+  });
+
+  test('responds with 400 bad request invalid ID when given an invalid id ', () => {
+    return request(app)
+      .post('/api/articles/notanid/comments')
+      .send({ username: 'butter_bridge', body: 'Hello' })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid ID Bad Request');
+      });
+  });
+
+  test('responds with a 404 article not found if article does not exist', () => {
+    return request(app)
+      .post('/api/articles/9999/comments')
+      .send({ username: 'butter_bridge', body: 'Hello' })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Article Not Found');
+      });
+  });
+});

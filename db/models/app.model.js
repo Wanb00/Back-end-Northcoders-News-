@@ -58,4 +58,25 @@ const selectCommentsByArticle = (article_id) => {
         })
 }
 
-module.exports = { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, };
+const insertCommentByArticle = (article_id, username, body) => {
+    if (!username || !body) {
+        return Promise.reject({ status: 400, msg: 'Bad Request, Missing required fields'});
+    }
+    return db
+        .query(`SELECT * FROM comments WHERE article_id = $1`, [article_id])
+        .then((result) => {
+            if (!result.rows[0]) {
+                return Promise.reject({
+                    status: 404,
+                    msg: 'Article Not Found'
+                });
+            }
+            return db
+                .query(`INSERT INTO comments (author, body, article_id)VALUES ($1, $2, $3) RETURNING comment_id, votes, created_at, author, body, article_id;`, [username, body, article_id]);
+        })
+        .then((result) => {
+            return result.rows[0];
+        })
+}
+
+module.exports = { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, insertCommentByArticle };
