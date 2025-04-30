@@ -295,3 +295,30 @@ describe('PATCH /api/articles/:article_id', () => {
       });
   });
 })
+
+describe('DELETE /api/comments/:comment_id', () => {
+  test('204: responds with a 204 status and empty response upon success', () => {
+    return request(app)
+      .delete('/api/comments/2')
+      .expect(204)
+      .then((response) => {
+        expect(response.body).toEqual({})
+      });
+  });
+  test('400: responds with Bad Request if article_id is invalid', () => {
+    return request(app)
+      .delete('/api/comments/NotAValidPath')
+      .expect(400)
+      .then((response) => {        
+        expect(response.body.msg).toBe('Invalid ID Bad Request');
+      });
+  });
+  test("404: responds with comment not found if id is valid but doesn't exist", () => {
+    return request(app)
+      .delete('/api/comments/9999')
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe('Comment Not Found')
+      })
+  })
+})
