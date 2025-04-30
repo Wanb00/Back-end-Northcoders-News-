@@ -13,7 +13,8 @@
     "description": "serves an array of all articles with optional sorting and ordering",
     "queries": {
       "sort_by": "column name to sort by (e.g. title, votes, created_at). Defaults to created_at.",
-      "order": "'asc' or 'desc'. Defaults to 'desc'."
+      "order": "'asc' or 'desc'. Defaults to 'desc'.",
+      "topic": "filter articles by topic"
     },
     "exampleResponse": {
       "articles": [
