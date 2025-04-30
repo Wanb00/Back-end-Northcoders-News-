@@ -322,3 +322,30 @@ describe('DELETE /api/comments/:comment_id', () => {
       })
   })
 })
+
+describe('GET /api/users', () => {
+  test('200: gets all users in an array', () => {
+    return request(app)
+      .get('/api/users')
+      .expect(200)
+      .then((response) => {
+        const users = response.body.users;
+        expect(users.length).toBeGreaterThan(0);
+        users.forEach((user) => {
+          expect(user).toEqual(expect.objectContaining({
+            username: expect.any(String),
+            name: expect.any(String),
+            avatar_url: expect.any(String)
+          }));
+        });
+      });
+  });
+  test('404: not found with bad path', () => {
+    return request(app)
+    .get('/api/invalid')
+    .expect(404)
+    .then((response) => {
+      expect(response.body.msg).toBe('Not Found!')
+    })
+  })
+});

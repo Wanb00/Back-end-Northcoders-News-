@@ -103,4 +103,10 @@ const selectCommentToDelete = (comment_id) => {
         });
 };
 
-module.exports = { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, insertCommentByArticle, selectArticleByIdToUpdate, selectCommentToDelete };
+const selectUsers = () => {
+    return db
+        .query(`SELECT * FROM users;`)
+        .then((result) => result.rows);
+}
+
+module.exports = { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, insertCommentByArticle, selectArticleByIdToUpdate, selectCommentToDelete, selectUsers };

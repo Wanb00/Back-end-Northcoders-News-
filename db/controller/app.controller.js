@@ -1,5 +1,5 @@
 const endpoints = require('../../endpoints.json');
-const { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, insertCommentByArticle, selectArticleByIdToUpdate, selectCommentToDelete } = require('../models/app.model');
+const { selectTopics, selectArticleById, selectArticles, selectCommentsByArticle, insertCommentByArticle, selectArticleByIdToUpdate, selectCommentToDelete, selectUsers } = require('../models/app.model');
 
 const getEndpoints = (req, res, next) => {
     res.status(200).send({ endpoints });
@@ -55,4 +55,10 @@ const deleteCommentById = (req, res, next) => {
     }).catch((err) => next(err));
 }
 
-module.exports = { getEndpoints, getTopics, getArticleById, getArticles, getCommentsByArticle, postCommentByArticle, updateArticleById, deleteCommentById };
+const getUsers = (req, res, next) => {
+    return selectUsers().then((users) => {
+        res.status(200).send({ users })
+    }).catch((err) => next(err));
+};
+
+module.exports = { getEndpoints, getTopics, getArticleById, getArticles, getCommentsByArticle, postCommentByArticle, updateArticleById, deleteCommentById, getUsers };
