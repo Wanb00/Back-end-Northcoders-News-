@@ -10,7 +10,11 @@
     }
   },
   "GET /api/articles": {
-    "description": "serves an array of all articles",
+    "description": "serves an array of all articles with optional sorting and ordering",
+    "queries": {
+      "sort_by": "column name to sort by (e.g. title, votes, created_at). Defaults to created_at.",
+      "order": "'asc' or 'desc'. Defaults to 'desc'."
+    },
     "exampleResponse": {
       "articles": [
         {
@@ -26,7 +30,7 @@
       ]
     }
   },
-  "Get /api/articles/:article_id": {
+  "GET /api/articles/:article_id": {
     "description": "responds with a single article by article_id",
     "exampleResponse": {
     "article": [
@@ -43,7 +47,7 @@
       ]
     }
   },
-  "/api/articles/:article_id/comments": {
+  "GET /api/articles/:article_id/comments": {
   "description": "responds with a list of comments by article_id",
   "exampleResponse": {
     "comments": [
@@ -58,7 +62,7 @@
       ]
     }
   },
-  "/api/articles/:article_id/comments": {
+  "POST /api/articles/:article_id/comments": {
     "description": "adds a new comment to the given article",
     "requestBody": {
       "username": "butter_bridge",
@@ -77,7 +81,7 @@
       ]
     }
   },
-  "/api/articles/:article_id": {
+  "PATCH /api/articles/:article_id": {
   "description": "updates the vote count of a specific article",
   "requestBody": {
     "inc_votes": 1
@@ -95,7 +99,7 @@
       }
     }
   },
-  "/api/comments/:comment_id": {
+  "DELETE /api/comments/:comment_id": {
     "description": "deletes a comment by its ID",
     "exampleResponse": {
       "status": 204,
