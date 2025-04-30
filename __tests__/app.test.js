@@ -382,8 +382,33 @@ describe('GET /api/articles (queries)', () => {
     return request(app)
       .get('/api/articles?order=notAQuery')
       .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe('Invalid order query');
+      });
+  });
+});
+
+describe('GET /api/articles?topic=', () => {
+  test('200: returns articles matching the topic', () => {
+    return request(app)
+      .get('/api/articles?topic=mitch')
+      .expect(200)
+      .then((response) => {
+        const articles = response.body.articles;
+        console.log(articles);
+        
+        expect(Array.isArray(articles)).toBe(true);
+        articles.forEach((article) => {
+          expect(article.topic).toBe('mitch');
+        });
+      });
+  });
+  test('404: topic not found', () => {
+    return request(app)
+      .get('/api/articles?topic=notARealTopic')
+      .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('Invalid order query');
+        expect(body.msg).toBe('Topic Not Found!');
       });
   });
 });
