@@ -21,3 +21,4 @@ if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
 
 
 module.exports = db;
+module.exports = new Pool(config);
