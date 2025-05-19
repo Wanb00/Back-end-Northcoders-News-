@@ -2,6 +2,7 @@ const db = require('./connection');
 const express = require('express');
 const app = express();
 const { getEndpoints, getTopics, getArticleById, getArticles, getCommentsByArticle, postCommentByArticle, updateArticleById, deleteCommentById, getUsers } = require('./controller/app.controller');
+const cors = require('cors');
 
 app.use(express.json());
 
