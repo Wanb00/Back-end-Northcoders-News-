@@ -9,6 +9,7 @@ To accomplish this project, the following were used to build the code:
 5. Render (server)
 6. Supabase (database)
 ### Link to the hosted version: https://back-end-northcoders-news.onrender.com
+### Link to the front-end: https://github.com/Wanb00/nc-news
 
 ## Cloning
 1. Clone using HTTPS by clicking the code<> drop down and copying the url.
