@@ -19,6 +19,14 @@ To accomplish this project, the following were used to build the code:
 - Node.js v23.8.0 or higher
 - Postgres 16.8 or higher
 
+## Table of Contents
+
+- [Setup Instructions](#setup)
+- [Tech Stack & Skills](#tech-stack--skills)
+- [API Documentation](#api-documentation)
+
+## Setup
+
 ### Installation
 
 #### 1. Clone the repository
