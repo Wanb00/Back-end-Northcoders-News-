@@ -136,7 +136,6 @@ This project demonstrates proficiency in API development, database design, Test-
 - Edge cases
 - Error handling
 - Data validation
-- Database schema verification
 
 2. **MVC Architecture**: Clear separation of models, views, and controllers
 3. **RESTful Design**: Following REST principles for API endpoints
