@@ -82,6 +82,28 @@
       ]
     }
   },
+  "POST /api/articles": {
+    "description": "post a new article",
+    "requestBody": {
+      "title": "Article",
+      "topic": "mitch",
+      "author": "butter_bridge",
+      "body": "This is a new article",
+      "article_img_url": "https://..."
+    },
+    "exampleResponse": {
+      "article": {
+        "article_id": 14,
+        "article_img_url": "https://...",
+        "author": "butter_bridge",
+        "body": "This is a tester article",
+        "created_at": "2020-04-06T12:17:00.000Z",
+        "title": "Test Article",
+        "topic": "mitch",
+        "votes": 0
+      }
+    }
+  },
   "PATCH /api/articles/:article_id": {
   "description": "updates the vote count of a specific article",
   "requestBody": {
