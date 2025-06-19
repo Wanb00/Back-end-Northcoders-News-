@@ -450,3 +450,28 @@ describe("POST /api/articles", () => {
       });
   });
 });
+
+describe("GET /api/users/:username", () => {
+  test("200: Returns a specific user object by it's username", () => {
+    const user = "butter_bridge";
+    return request(app)
+      .get(`/api/users/${user}`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          username: "butter_bridge",
+          avatar_url: expect.any(String),
+          name: "jonny",
+        });
+      });
+  });
+  test("404: Not Found when passed non-existent username", () => {
+    const user = "notAnExistingUser";
+    return request(app)
+      .get(`/api/users/${user}`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("username not found!");
+      });
+  });
+});
