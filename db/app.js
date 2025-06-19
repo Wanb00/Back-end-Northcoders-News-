@@ -11,6 +11,7 @@ const {
   deleteCommentById,
   getUsers,
   postArticle,
+  getUserByUsername,
 } = require("./controller/app.controller");
 const cors = require("cors");
 
@@ -36,6 +37,8 @@ app.patch("/api/articles/:article_id", updateArticleById);
 app.delete("/api/comments/:comment_id", deleteCommentById);
 
 app.get("/api/users", getUsers);
+
+app.get("/api/users/:username", getUserByUsername);
 
 app.all("/*splat", (req, res) => {
   res.status(404).send({ msg: "Not Found!" });

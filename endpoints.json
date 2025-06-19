@@ -34,7 +34,7 @@
   "GET /api/articles/:article_id": {
     "description": "responds with a single article by article_id",
     "exampleResponse": {
-    "article": [
+      "article": [
         {
           "author": "butter_bridge",
           "title": "Living in the shadow of a great man",
@@ -49,9 +49,9 @@
     }
   },
   "GET /api/articles/:article_id/comments": {
-  "description": "responds with a list of comments by article_id",
-  "exampleResponse": {
-    "comments": [
+    "description": "responds with a list of comments by article_id",
+    "exampleResponse": {
+      "comments": [
         {
           "comment_id": 11,
           "votes": 0,
@@ -71,7 +71,7 @@
     },
     "exampleResponse": {
       "comment": [
-          {
+        {
           "comment_id": 123,
           "votes": 0,
           "created_at": "2020-04-06T12:17:00.000Z",
@@ -105,9 +105,9 @@
     }
   },
   "PATCH /api/articles/:article_id": {
-  "description": "updates the vote count of a specific article",
-  "requestBody": {
-    "inc_votes": 1
+    "description": "updates the vote count of a specific article",
+    "requestBody": {
+      "inc_votes": 1
     },
     "exampleResponse": {
       "article": {
@@ -129,16 +129,31 @@
       "body": {}
     }
   },
-  "/api/users": {
-  "description": "fetches all users",
-  "exampleResponse": {
-    "users": [
+  "GET /api/users": {
+    "description": "fetches all users",
+    "exampleResponse": {
+      "users": [
         {
           "username": "butter_bridge",
           "name": "Jonny",
           "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg"
+        },
+        {
+          "username": "rogersop",
+          "name": "paul",
+          "avatar_url": "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4"
         }
       ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "selects a user by their username",
+    "exampleResponse": {
+      "user": {
+        "username": "butter_bridge",
+        "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+        "name": "Jonny"
+      }
     }
   }
 }

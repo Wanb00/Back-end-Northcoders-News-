@@ -9,6 +9,7 @@ const {
   selectCommentToDelete,
   selectUsers,
   insertArticle,
+  selectUserByUsername,
 } = require("../models/app.model");
 
 const getEndpoints = (req, res, next) => {
@@ -59,10 +60,10 @@ const postCommentByArticle = (req, res, next) => {
 const postArticle = (req, res, next) => {
   const { title, topic, author, body, article_img_url } = req.body;
   insertArticle(title, topic, author, body, article_img_url)
-  .then((article) => {
-    res.status(201).send({ article });
-  })
-  .catch((err) => next(err))
+    .then((article) => {
+      res.status(201).send({ article });
+    })
+    .catch((err) => next(err));
 };
 
 const updateArticleById = (req, res, next) => {
@@ -92,6 +93,15 @@ const getUsers = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const getUserByUsername = (req, res, next) => {
+  const { username } = req.params;
+  return selectUserByUsername(username)
+    .then((user) => {
+      res.status(200).send({ user });
+    })
+    .catch((err) => next(err));
+};
+
 module.exports = {
   getEndpoints,
   getTopics,
@@ -102,5 +112,6 @@ module.exports = {
   updateArticleById,
   deleteCommentById,
   getUsers,
-  postArticle
+  postArticle,
+  getUserByUsername,
 };

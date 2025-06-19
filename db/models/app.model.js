@@ -156,7 +156,7 @@ const insertArticle = (
   topic,
   author,
   body,
-  article_img_url = "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+  article_img_url = "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
 ) => {
   return db
     .query(
@@ -164,6 +164,20 @@ const insertArticle = (
       [title, topic, author, body, article_img_url]
     )
     .then((result) => {
+      return result.rows[0];
+    });
+};
+
+const selectUserByUsername = (username) => {
+  return db
+    .query(`SELECT * FROM users WHERE username = $1`, [username])
+    .then((result) => {
+      if (!result.rows[0]) {
+        return Promise.reject({
+          status: 404,
+          msg: "username not found!",
+        });
+      }
       return result.rows[0];
     });
 };
@@ -178,4 +192,5 @@ module.exports = {
   selectCommentToDelete,
   selectUsers,
   insertArticle,
+  selectUserByUsername,
 };
