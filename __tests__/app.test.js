@@ -475,3 +475,27 @@ describe("GET /api/users/:username", () => {
       });
   });
 });
+
+describe.only("GET /api/users/:user/articles", () => {
+  test("200: Returns all the articles of a specific user", () => {
+    const user = "butter_bridge";
+    return request(app)
+      .get(`/api/users/${user}/articles`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles.length).toBe(4);
+        body.articles.forEach((article) => {
+          expect(article.author).toBe("butter_bridge");
+        });
+      });
+  });
+  test("404: If user does not exist", () => {
+    const user = "notAUser";
+    return request(app)
+      .get(`/api/users/${user}/articles`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No articles");
+      });
+  });
+});
