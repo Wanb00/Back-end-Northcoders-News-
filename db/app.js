@@ -12,6 +12,7 @@ const {
   getUsers,
   postArticle,
   getUserByUsername,
+  getArticlesByAuthor,
 } = require("./controller/app.controller");
 const cors = require("cors");
 
@@ -26,7 +27,13 @@ app.get("/api/articles/:article_id", getArticleById);
 
 app.get("/api/articles", getArticles);
 
+app.get("/api/users/:user/articles", getArticlesByAuthor)
+
 app.get("/api/articles/:article_id/comments", getCommentsByArticle);
+
+app.get("/api/users", getUsers);
+
+app.get("/api/users/:username", getUserByUsername);
 
 app.post("/api/articles/:article_id/comments", postCommentByArticle);
 
@@ -35,10 +42,6 @@ app.post("/api/articles", postArticle);
 app.patch("/api/articles/:article_id", updateArticleById);
 
 app.delete("/api/comments/:comment_id", deleteCommentById);
-
-app.get("/api/users", getUsers);
-
-app.get("/api/users/:username", getUserByUsername);
 
 app.all("/*splat", (req, res) => {
   res.status(404).send({ msg: "Not Found!" });

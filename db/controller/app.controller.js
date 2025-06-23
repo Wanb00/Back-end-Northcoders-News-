@@ -10,6 +10,7 @@ const {
   selectUsers,
   insertArticle,
   selectUserByUsername,
+  selectArticlesByAuthor,
 } = require("../models/app.model");
 
 const getEndpoints = (req, res, next) => {
@@ -102,6 +103,15 @@ const getUserByUsername = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const getArticlesByAuthor = (req, res, next) => {
+  const { user } = req.params;
+  return selectArticlesByAuthor(user)
+    .then((articles) => {
+      res.status(200).send({ articles });
+    })
+    .catch((err) => next(err));
+};
+
 module.exports = {
   getEndpoints,
   getTopics,
@@ -114,4 +124,5 @@ module.exports = {
   getUsers,
   postArticle,
   getUserByUsername,
+  getArticlesByAuthor
 };

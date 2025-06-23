@@ -182,6 +182,20 @@ const selectUserByUsername = (username) => {
     });
 };
 
+const selectArticlesByAuthor = (user) => {
+  return db
+    .query(`SELECT * FROM articles WHERE author = $1`, [user])
+    .then((result) => {
+      if (!result.rows[0]) {
+        return Promise.reject({
+          status: 404,
+          msg: "No articles",
+        });
+      }
+      return result.rows;
+    });
+};
+
 module.exports = {
   selectTopics,
   selectArticleById,
@@ -193,4 +207,5 @@ module.exports = {
   selectUsers,
   insertArticle,
   selectUserByUsername,
+  selectArticlesByAuthor,
 };
