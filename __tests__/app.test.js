@@ -476,7 +476,7 @@ describe("GET /api/users/:username", () => {
   });
 });
 
-describe.only("GET /api/users/:user/articles", () => {
+describe("GET /api/users/:user/articles", () => {
   test("200: Returns all the articles of a specific user", () => {
     const user = "butter_bridge";
     return request(app)
