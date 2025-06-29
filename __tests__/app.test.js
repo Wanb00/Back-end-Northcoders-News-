@@ -499,3 +499,38 @@ describe("GET /api/users/:user/articles", () => {
       });
   });
 });
+
+describe("PATCH /api/comments/:comment_id", () => {
+  test("200: Returns the patched comment", () => {
+    return request(app)
+      .patch("/api/comments/3")
+      .send({ inc_votes: 5 })
+      .expect(200)
+      .then((response) => {
+        expect(response.body.comment).toMatchObject({
+          comment_id: 3,
+          votes: 105,
+        });
+      });
+  });
+  test("400: Bad req when inc_votes is not a number", () => {
+    return request(app)
+      .patch("/api/comments/3")
+      .send({ inc_votes: "not-a-number" })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe(
+          "Bad Request inc_votes must be a number"
+        );
+      });
+  });
+  test("404: When comment does not exist", () => {
+    return request(app)
+      .patch("/api/comments/9999")
+      .send({ inc_votes: 2 })
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Comment Not Found");
+      });
+  });
+});

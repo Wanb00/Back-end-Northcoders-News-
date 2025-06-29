@@ -11,6 +11,7 @@ const {
   insertArticle,
   selectUserByUsername,
   selectArticlesByAuthor,
+  selectCommentByIdToUpdate,
 } = require("../models/app.model");
 
 const getEndpoints = (req, res, next) => {
@@ -77,6 +78,16 @@ const updateArticleById = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const updateCommentById = (req, res, next) => {
+  const { comment_id } = req.params;
+  const { inc_votes } = req.body;
+  return selectCommentByIdToUpdate(comment_id, inc_votes)
+  .then((comment) => {
+    res.status(200).send({ comment });
+  })
+  .catch((err) => next(err));
+}
+
 const deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params;
   return selectCommentToDelete(comment_id)
@@ -124,5 +135,6 @@ module.exports = {
   getUsers,
   postArticle,
   getUserByUsername,
-  getArticlesByAuthor
+  getArticlesByAuthor,
+  updateCommentById
 };
