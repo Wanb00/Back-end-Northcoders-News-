@@ -13,6 +13,7 @@ const {
   postArticle,
   getUserByUsername,
   getArticlesByAuthor,
+  updateCommentById,
 } = require("./controller/app.controller");
 const cors = require("cors");
 
@@ -40,6 +41,8 @@ app.post("/api/articles/:article_id/comments", postCommentByArticle);
 app.post("/api/articles", postArticle);
 
 app.patch("/api/articles/:article_id", updateArticleById);
+
+app.patch("/api/comments/:comment_id", updateCommentById)
 
 app.delete("/api/comments/:comment_id", deleteCommentById);
 

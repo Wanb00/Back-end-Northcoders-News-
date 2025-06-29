@@ -499,3 +499,18 @@ describe("GET /api/users/:user/articles", () => {
       });
   });
 });
+
+describe.only("PATCH /api/comments/:comment_id", () => {
+  test("200: Returns the patched comment", () => {
+    return request(app)
+    .patch('/api/comments/3')
+    .send({ inc_votes: 5 })
+    .expect(200)
+    .then((response) => {
+      expect(response.body.comment).toMatchObject({
+        comment_id: 3,
+        votes: 105
+      })
+    })
+  })
+})
