@@ -122,6 +122,21 @@
       }
     }
   },
+  "PATCH /api/comments/:comment_id": {
+    "description": "updates vote count of a specific comment",
+    "requestBody": {
+      "inc_votes": 1
+    },
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 1,
+        "article_id": 2,
+        "votes": 5,
+        "author": "butter_bridge",
+        "body": "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works."
+      }
+    }
+  },
   "DELETE /api/comments/:comment_id": {
     "description": "deletes a comment by its ID",
     "exampleResponse": {
