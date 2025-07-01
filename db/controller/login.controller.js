@@ -35,4 +35,17 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).send({ msg: "No token provided" });
+
+  const token = authHeader.split(" ")[1];
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) return res.status(403).send({ msg: "Invalid token!" });
+    req.user = user;
+    next();
+  });
+};
+
+module.exports = { login, authenticate };
