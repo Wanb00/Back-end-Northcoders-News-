@@ -506,7 +506,7 @@ describe("PATCH /api/comments/:comment_id", () => {
       .patch("/api/comments/3")
       .send({ inc_votes: 5 })
       .expect(200)
-      .then((response) => {  
+      .then((response) => {
         expect(response.body.comment).toMatchObject({
           comment_id: 3,
           votes: 105,
@@ -533,4 +533,43 @@ describe("PATCH /api/comments/:comment_id", () => {
         expect(response.body.msg).toBe("Comment Not Found");
       });
   });
+});
+
+describe("POST /api/login", () => {
+  test("200: Returns user information except password with a token", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "butter_bridge", password: "MapleFox92!" })
+      .expect(200)
+      .then((response) => {
+        expect(typeof response.body.token).toBe("string")
+        expect(response.body.user).not.toHaveProperty("password")
+        expect(response.body.user).toEqual(
+          expect.objectContaining({
+            username: "butter_bridge",
+            name: "jonny",
+            avatar_url:
+              "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+          })
+        );
+      });
+  });
+  test("401: Invalid Credentials if username is wrong", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "wrongUser", password: "MapleFox92!" })
+      .expect(401)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid Credentials")
+      })
+  })
+  test("401: Invalid Credentials if password is wrong", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "butter_bridge", password: "WrongPassword" })
+      .expect(401)
+      .then((response) => {
+        expect(response.body.msg).toBe("Invalid Credentials")
+      })
+  })
 });

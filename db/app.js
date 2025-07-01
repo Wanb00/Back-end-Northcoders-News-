@@ -15,6 +15,7 @@ const {
   getArticlesByAuthor,
   updateCommentById,
 } = require("./controller/app.controller");
+const { login } = require("./controller/login.controller");
 const cors = require("cors");
 
 app.use(cors());
@@ -39,6 +40,8 @@ app.get("/api/users/:username", getUserByUsername);
 app.post("/api/articles/:article_id/comments", postCommentByArticle);
 
 app.post("/api/articles", postArticle);
+
+app.post("/api/login", login);
 
 app.patch("/api/articles/:article_id", updateArticleById);
 
