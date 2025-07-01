@@ -15,6 +15,7 @@ const {
   getArticlesByAuthor,
   updateCommentById,
 } = require("./controller/app.controller");
+const { login, authenticate } = require("./controller/login.controller");
 const cors = require("cors");
 
 app.use(cors());
@@ -28,7 +29,7 @@ app.get("/api/articles/:article_id", getArticleById);
 
 app.get("/api/articles", getArticles);
 
-app.get("/api/users/:user/articles", getArticlesByAuthor)
+app.get("/api/users/:user/articles", getArticlesByAuthor);
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticle);
 
@@ -36,13 +37,19 @@ app.get("/api/users", getUsers);
 
 app.get("/api/users/:username", getUserByUsername);
 
+app.get("/api/secure-data", authenticate, (req, res) => {
+  res.send({ data: "Secret stuff for " + req.user.username });
+});
+
 app.post("/api/articles/:article_id/comments", postCommentByArticle);
 
 app.post("/api/articles", postArticle);
 
+app.post("/api/login", login);
+
 app.patch("/api/articles/:article_id", updateArticleById);
 
-app.patch("/api/comments/:comment_id", updateCommentById)
+app.patch("/api/comments/:comment_id", updateCommentById);
 
 app.delete("/api/comments/:comment_id", deleteCommentById);
 
