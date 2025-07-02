@@ -210,6 +210,17 @@ const selectArticlesByAuthor = (user) => {
     });
 };
 
+const insertUser = ({ username, name, avatar_url, password }) => {
+  return db
+    .query(
+      `INSERT INTO users (username, name, avatar_url, password) VALUES ($1, $2, $3, $4) RETURNING username, name, avatar_url`,
+      [username, name, avatar_url, password]
+    )
+    .then((result) => {
+      return result.rows[0];
+    });
+};
+
 module.exports = {
   selectTopics,
   selectArticleById,
@@ -222,5 +233,6 @@ module.exports = {
   insertArticle,
   selectUserByUsername,
   selectArticlesByAuthor,
-  selectCommentByIdToUpdate
+  selectCommentByIdToUpdate,
+  insertUser,
 };
