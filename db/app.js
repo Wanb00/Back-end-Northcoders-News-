@@ -17,6 +17,7 @@ const {
 } = require("./controller/app.controller");
 const { login, authenticate } = require("./controller/login.controller");
 const cors = require("cors");
+const { signup } = require("./controller/signup.controller");
 
 app.use(cors());
 app.use(express.json());
@@ -46,6 +47,8 @@ app.post("/api/articles/:article_id/comments", postCommentByArticle);
 app.post("/api/articles", postArticle);
 
 app.post("/api/login", login);
+
+app.post("/api/users", signup)
 
 app.patch("/api/articles/:article_id", updateArticleById);
 

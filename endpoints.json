@@ -182,5 +182,19 @@
       "name": "jonny",
       "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg"
     }
+  },
+  "POST /api/users": {
+    "description": "Signup endpoint to create your own account",
+    "requestBody": {
+      "username": "newUser",
+      "name": "Jimmy",
+      "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+      "password": "Jimmy123!"
+    },
+    "exampleResponse": {
+      "username": "newUser",
+      "name": "Jimmy",
+      "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg"
+    }
   }
 }

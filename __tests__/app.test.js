@@ -600,3 +600,71 @@ describe("/api/secure-data", () => {
       });
   });
 });
+
+describe.only("POST /api/users", () => {
+  test("200: Returns the new user", () => {
+    const user = {
+      username: "tester",
+      name: "test",
+      avatar_url: "test.com",
+      password: "test123",
+    };
+
+    return request(app)
+      .post("/api/users")
+      .send(user)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.user).toEqual({
+          username: "tester",
+          name: "test",
+          avatar_url: "test.com",
+        });
+      });
+  });
+  test("400: Missing required fields if missing username", () => {
+    const user = {
+      name: "test",
+      avatar_url: "test.com",
+      password: "test123",
+    };
+
+     return request(app)
+      .post("/api/users")
+      .send(user)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Missing required fields!")
+      })
+  });
+  test("400: Missing required fields if missing name", () => {
+    const user = {
+      username: "tester",
+      avatar_url: "test.com",
+      password: "test123",
+    };
+
+     return request(app)
+      .post("/api/users")
+      .send(user)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Missing required fields!")
+      })
+  });
+  test("400: Missing required fields if missing password", () => {
+    const user = {
+      username: "tester",
+      name: "test",
+      avatar_url: "test.com"
+    };
+
+     return request(app)
+      .post("/api/users")
+      .send(user)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Missing required fields!")
+      })
+  });
+});
