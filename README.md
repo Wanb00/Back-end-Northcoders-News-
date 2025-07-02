@@ -92,10 +92,15 @@ Once the server is running, you can access the API documentation at the `/api` e
 | GET    | /api/articles                      | Get all articles (with filters/sorting) |
 | GET    | /api/articles/:article_id          | Get specific article by ID              |
 | GET    | /api/articles/:article_id/comments | Get comments for a specific article     |
-| POST   | /api/articles/:article_id/comments | Post a new comment to an article        |
-| PATCH  | /api/articles/:article_id          | Update article votes                    |
-| DELETE | /api/comments/:comment_id          | Delete a comment                        |
 | GET    | /api/users                         | Get all users                           |
+| GET    | /api/users/:username               | Gets a specific user                    |
+| POST   | /api/articles/:article_id/comments | Post a new comment to an article        |
+| POST   | /api/login                         | Login Endpoint                          |
+| POST   | /api/articles                      | Post a article                          |
+| PATCH  | /api/articles/:article_id          | Update article votes                    |
+| PATCH  | /api/comments/:comment_id          | Update comment votes                    |
+| DELETE | /api/comments/:comment_id          | Delete a comment                        |
+
 
 ### Query Examples
 
@@ -136,7 +141,9 @@ This project demonstrates proficiency in API development, database design, Test-
 - Edge cases
 - Error handling
 - Data validation
+- Password Hashing
 
 2. **MVC Architecture**: Clear separation of models, views, and controllers
 3. **RESTful Design**: Following REST principles for API endpoints
 4. **Incremental Development**: Building features incrementally with git version control
+5. **Secure Passwords**: Hashed password storage using bcrypt
