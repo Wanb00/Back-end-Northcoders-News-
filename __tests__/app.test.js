@@ -601,7 +601,7 @@ describe("/api/secure-data", () => {
   });
 });
 
-describe.only("POST /api/users", () => {
+describe("POST /api/users", () => {
   test("200: Returns the new user", () => {
     const user = {
       username: "tester",
